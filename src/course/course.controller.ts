@@ -14,6 +14,11 @@ export class CourseController {
         return this. courseService.getAllCourses()
     }
 
+    @Get(':id')
+    async getCourse(@Param('id', new ParseIntPipe()) courseId: number) {
+        return await this.courseService.getCourseById(courseId)
+    }
+
     @UseGuards(AuthGuard("jwt"))
     @Post()
     async createCourse(@Body() dto: CourseDto, @Req() req: Request) {
