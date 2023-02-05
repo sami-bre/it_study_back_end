@@ -10,8 +10,8 @@ export class CourseController {
     constructor(private courseService: CourseService) {}
 
     @Get()
-    getAllCources() {
-        return this. courseService.getAllCourses()
+    async getAllCources() {
+        return await this.courseService.getAllCourses()
     }
 
     @Get(':id')
