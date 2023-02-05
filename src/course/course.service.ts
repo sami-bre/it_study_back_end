@@ -22,7 +22,7 @@ export class CourseService {
                 createdCourses: true,
             }
         })
-        return {'created': user.createdCourses, registeredFor: user.courses}
+        return {'created': user.createdCourses, 'registeredFor': user.courses}
     }
 
     async createCourse(dto: CourseDto, userId: number) {
