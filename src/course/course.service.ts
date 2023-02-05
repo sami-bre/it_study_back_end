@@ -37,17 +37,12 @@ export class CourseService {
     }
 
     async updateCourse(courseId: number, user: any, dto: CourseDto) {
-        // verify user is the author of the course. for that, let's get the course
-        let course = await this.prisma.course.findUnique({
-            where: {id: courseId},
-        })
-        if(!course) {
-            throw new NotFoundException("the course does not exist")
-        }
-        // then verify
+        // verify user is the author of the course.
+        let course = await this.getCourseById(courseId)
         if(!(course.authorId == user.id)) {
-            throw new ForbiddenException("User us not the author of the course. Only the author can update")
+            throw new ForbiddenException("User is not the author of the course. Only the author can update")
         }
+        // then update
         let updatedCourse = await this.prisma.course.update({
             where: {
                 id: courseId,
@@ -59,5 +54,28 @@ export class CourseService {
         })
 
         return updatedCourse;
+    }
+
+    async deleteCourse(courseId: number, user: any) {
+        // first verify if user is owner if the course
+        let course = await this.getCourseById(courseId)
+        if(course.authorId != user.id) {
+            throw new ForbiddenException("User is not the author of the course. Only the author can delete")
+        }
+        // then delete the course
+        let deletedCourse = await this.prisma.course.delete({
+            where: {id: courseId}
+        })
+        return deletedCourse
+    }
+
+    async getCourseById(courseId: number) {
+        let course = await this.prisma.course.findUnique({
+            where: {id: courseId},
+        })
+        if(!course) {
+            throw new NotFoundException("the course does not exist")
+        }
+        return course
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { timeStamp } from 'console';
 import { AuthGuard } from '@nestjs/passport';
@@ -26,7 +26,13 @@ export class CourseController {
      */
     @UseGuards(AuthGuard("jwt"))
     @Patch(':id')
-    updateCourse(@Param('id', new ParseIntPipe()) id: number, @Req() req: Request, @Body() dto: CourseDto) {
-        return this.courseService.updateCourse(id, req.user, dto)
+    async updateCourse(@Param('id', new ParseIntPipe()) courseId: number, @Req() req: Request, @Body() dto: CourseDto) {
+        return await this.courseService.updateCourse(courseId, req.user, dto)
+    }
+
+    @UseGuards(AuthGuard("jwt"))
+    @Delete(':id')
+    async deleteCourse(@Param('id', new ParseIntPipe()) courseId: number, @Req() req: Request){
+        return await this.courseService.deleteCourse(courseId, req.user)
     }
 }
