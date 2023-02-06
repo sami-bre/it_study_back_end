@@ -36,7 +36,7 @@ export class UserController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @Delete()
+    @Delete('/me')
     deleteUser(@Req() req: Request) {
         return this.userService.deleteUser(req.user['id'])
     }
