@@ -4,6 +4,7 @@ import { timeStamp } from 'console';
 import { AuthGuard } from '@nestjs/passport';
 import { CourseDto } from './dto.course';
 import { Request } from 'express';
+import { link } from 'fs';
 
 @Controller('courses')
 export class CourseController {
@@ -40,4 +41,15 @@ export class CourseController {
     async deleteCourse(@Param('id', new ParseIntPipe()) courseId: number, @Req() req: Request){
         return await this.courseService.deleteCourse(courseId, req.user)
     }
+
+    /**
+     * This controller-service pair allows users to be registered for specific courses.
+     */
+    @UseGuards(AuthGuard("jwt"))
+    @Patch(':id/users/me')
+    async test(@Req() req: Request, @Param('id', new ParseIntPipe()) courseId: number){
+        return await this.courseService.registerUserForCourse(courseId, req.user['id'])
+    }
+
+    
 }
