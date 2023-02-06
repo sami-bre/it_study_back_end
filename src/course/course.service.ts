@@ -78,4 +78,15 @@ export class CourseService {
         }
         return course
     }
+
+    async registerUserForCourse(courseId: number, userId: number) {
+        return await this.prisma.course.update({
+            where: {id: courseId},
+            data: {
+                registeredUsers: {
+                    connect: {id: userId}
+                }
+            }
+        })
+    }
 }
