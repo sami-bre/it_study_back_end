@@ -4,7 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { SignUpDto, UserUpdateDto } from 'src/auth/auth.dto';
+import { SignUpDto } from 'src/auth/auth.dto';
+import { UserUpdateDto } from './dto.user';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';

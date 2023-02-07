@@ -6,6 +6,7 @@ import {
   Inject,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Put,
   Req,
@@ -13,7 +14,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
-import { SignUpDto, UserUpdateDto } from '../auth/auth.dto';
+import { SignUpDto } from '../auth/auth.dto';
+import { UserUpdateDto } from './dto.user';
 import { prisma } from '@prisma/client';
 import { UserService } from './user.service';
 import { CourseService } from 'src/course/course.service';
@@ -45,7 +47,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Put()
+  @Patch('/me')
   updateUser(@Body() dto: UserUpdateDto, @Req() req: Request) {
     return this.userService.updateUSer(dto, req.user['id']);
   }
