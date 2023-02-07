@@ -51,5 +51,11 @@ export class CourseController {
         return await this.courseService.registerUserForCourse(courseId, req.user['id'])
     }
 
+    @UseGuards(AuthGuard("jwt"))
+    @Delete(':id/users/me')
+    async unregisterUserForCourse(@Req() req: Request, @Param('id', new ParseIntPipe()) courseId: number){
+        return await this.courseService.unregisterUserForCourse(courseId, req.user['id'])
+    }
+
     
 }
