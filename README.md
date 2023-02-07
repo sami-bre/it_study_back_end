@@ -3,7 +3,7 @@ IT study is a silly small webapp that allows users to register for courses and c
 
 This repo holds the REST API back-end implementation code (with nestjs) for the webapp
 
-All the REST API call routes are documented in the `documentation/it_study_REST_routes.json` file. This fiel is exported from [insomnia] (https://insomnia.rest/products/insomnia).
+All the REST API call routes are documented in the `documentation/it_study_REST_routes.json` file. This fiel is exported from 	[insomnia](https://www.insomnia.rest)
 
 ## setup
 
